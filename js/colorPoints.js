@@ -43,7 +43,10 @@ function main(){
     }
     //获取u_FragColor变量的储存位置
     var u_FragColor = gl.getUniformLocation(gl.program, 'u_FragColor');
-    console.log( u_FragColor );
+    if( !u_FragColor ){
+        console.log( 'Failed to get u_FragColor' );
+        return;
+    }
 
     var status = 0;
     //注册鼠标点击事件响应函数
