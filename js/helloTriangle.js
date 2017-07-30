@@ -45,6 +45,9 @@ function main(){
 
     //绘制三个点
     gl.drawArrays( gl.TRIANGLES, 0, n ); // n is 3
+    // gl.drawArrays( gl.LINES, 0, n ); // n is 3
+    // gl.drawArrays( gl.LINE_STRIP, 0, n ); // n is 3
+    // gl.drawArrays( gl.LINE_LOOP, 0, n ); // n is 3
 }
 
 function initVertexBuffers(gl){
