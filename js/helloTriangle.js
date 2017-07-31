@@ -5,8 +5,9 @@
 //顶点着色器函数
 var VSHADER_SOURCE =
     'attribute vec4 a_Position;\n'+
+    'uniform vec4 u_Translation;\n'+
     'void main(){\n' +
-    'gl_Position = a_Position;\n' +
+    'gl_Position = a_Position + u_Translation;\n' +
     '}\n';
 
 //片元着色器函数
@@ -14,6 +15,10 @@ var FSHADER_SOURCE =
     'void main() {\n' +
     ' gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n'+
     '}\n';
+
+var Tx = 0.5,
+    Ty = 0.5,
+    Tz = 0.0;
 
 function main(){
     var canvas = document.getElementById('webgl');
@@ -38,6 +43,9 @@ function main(){
         console.log( 'Failed to get the stroge location of a_Position' );
         return;
     }
+
+    var u_Translation = gl.getUniformLocation(gl.program, 'u_Translation');
+    gl.uniform4f(u_Translation, Tx, Ty, Tz, 0.0)
 
     //设置背景色
     gl.clearColor(0.5,0.5,0.5,1.0);
