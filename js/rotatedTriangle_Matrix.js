@@ -6,8 +6,9 @@ var VSHADER_SOURCE =
     'attribute vec4 a_Position;\n'+
     'uniform mat4 u_xformTransMatrix;\n'+
     'uniform mat4 u_xformRotaMatrix;\n'+
+    'uniform mat4 u_xformSizeMatrix;\n'+
     'void main(){\n' +
-    'gl_Position = u_xformRotaMatrix * ( u_xformTransMatrix * a_Position );\n' +
+    'gl_Position = u_xformRotaMatrix * ( u_xformSizeMatrix * ( u_xformTransMatrix * a_Position ));\n' +
     '}\n';
 
 //片元着色器函数
@@ -16,12 +17,15 @@ var FSHADER_SOURCE =
     ' gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n'+
     '}\n';
 
-var Tx = -0.2,
+var Tx = -0.1,
     Ty = 0.2,
     Tz = 0.0;
 //旋转角度
 var ANGLE = 45.0;
 
+var Sx = 1.5,
+    Sy = 0.5,
+    Sz = 1.0;
 function main(){
     var canvas = document.getElementById('webgl');
     if( !canvas ){
@@ -66,13 +70,22 @@ function main(){
         0.0, 0.0, 1.0, 0.0,
         0.0, 0.0, 0.0, 1.0
     ]);
+    //缩放矩阵
+    var xFormSizeMatrix = new Float32Array([
+        Sx, 0.0, 0.0, 0.0,
+        0.0, Sy, 0.0, 0.0,
+        0.0, 0.0, Sz, 0.0,
+        0.0, 0.0, 0.0, 1.0
+    ]);
 
     //将矩阵数据传输给顶点着色器
     var u_xformTransMatrix = gl.getUniformLocation(gl.program, 'u_xformTransMatrix');
     var u_xformRotaMatrix = gl.getUniformLocation(gl.program, 'u_xformRotaMatrix');
+    var u_xformSizeMatrix = gl.getUniformLocation(gl.program, 'u_xformSizeMatrix');
 
     gl.uniformMatrix4fv(u_xformTransMatrix, false, xformTransMatrix);
     gl.uniformMatrix4fv(u_xformRotaMatrix, false, xFormRotaMatrix);
+    gl.uniformMatrix4fv(u_xformSizeMatrix, false, xFormSizeMatrix);
     //将旋转矩阵传输给顶点着色器
 
 
