@@ -3,11 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        #btn{
+            width: 60px;
+            height: 24px;
+            line-height: 24px;
+            font-size: 14px;
+            color: #fff;
+            text-align: center;
+            background-color: #f39800;
+            cursor: pointer;
+            border-radius: 12px;
+            margin-left: 90px;
+        }
+        #btn:hover{
+            background-color: #ccc;
+            color: #f39800;
+        }
+    </style>
 </head>
 <body onload="main()">
 <canvas id="webgl" width="400" height="400">
     Please use a brower that supports "canvas"
 </canvas>
+<div id="btn">旋转</div>
 <script type="text/javascript" src="../js/lib/webgl-utils.js"></script>
 <script type="text/javascript" src="../js/lib/webgl-debug.js"></script>
 <script type="text/javascript" src="../js/lib/cuon-utils.js"></script>

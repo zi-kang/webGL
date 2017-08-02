@@ -61,10 +61,12 @@ function main(){
     var tick = function() {
         currentAngle = animate(currentAngle);  // 更新旋转角
         draw(gl, n, currentAngle, modelMatrix, u_ModelMatrix);   // 绘制多边形
-        requestAnimationFrame(tick, canvas); // 请求浏览器调用tick
     };
     tick();
-
+    var $btn = document.getElementById('btn');
+    $btn.onclick = function(){
+        requestAnimationFrame(tick, canvas); // 请求浏览器调用tick
+    }
 }
 
 function initVertexBuffers(gl){
