@@ -42,10 +42,10 @@ function main(){
 function initVertexBuffers(gl){
     var verticesSizes = new Float32Array([
         // 顶点坐标和点的尺寸
-        -0.5, 0.5,  10.0,  // 第一个点
-        -0.5, -0.5,  20.0,  // 第二个点
-        0.5, 0.5,  30.0,   // 第三个点
-        0.5, -0.5,  5.0   // 第四个点
+        10.0, -0.5, 0.5,  // 第一个点
+        20.0, -0.5, -0.5,  // 第二个点
+        30.0, 0.5, 0.5,   // 第三个点
+        5.0, 0.5, -0.5   // 第四个点
     ]);
     var n = 4; // The number of vertices
 
@@ -66,7 +66,7 @@ function initVertexBuffers(gl){
         console.log('Failed to get the storage location of a_Position');
         return -1;
     }
-    gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, FSIZE * 3, 0);
+    gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, FSIZE * 3, FSIZE );
     gl.enableVertexAttribArray(a_Position);  // 开启分配
 
     // 获取a_PointSize的存储位置，并分配缓冲区开启
@@ -75,7 +75,7 @@ function initVertexBuffers(gl){
         console.log('Failed to get the storage location of a_PointSize');
         return -1;
     }
-    gl.vertexAttribPointer(a_PointSize, 1, gl.FLOAT, false, FSIZE * 3, FSIZE * 2);
+    gl.vertexAttribPointer(a_PointSize, 1, gl.FLOAT, false, FSIZE * 3, 0);
     gl.enableVertexAttribArray(a_PointSize);  // 开启缓冲区
 
     // 解除绑定的缓冲区对象
