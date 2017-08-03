@@ -10,7 +10,6 @@ var VSHADER_SOURCE =
     '  v_TexCoord = a_TexCoord;\n' +
     '}\n';
 
-// Fragment shader program
 var FSHADER_SOURCE =
     '#ifdef GL_ES\n' +
     'precision mediump float;\n' +
@@ -22,26 +21,26 @@ var FSHADER_SOURCE =
     '}\n';
 
 function main() {
-    // Retrieve <canvas> element
     var canvas = document.getElementById('webgl');
-
-    // Get the rendering context for WebGL
+    if( !canvas ){
+        console.log( 'Failed to retrieve the <canvas> element' );
+        return;
+    }
     var gl = getWebGLContext(canvas);
-    if (!gl) {
-        console.log('Failed to get the rendering context for WebGL');
+    if( !gl ){
+        console.log( '不能正确获取webgl绘图上下文' );
+        return;
+    }
+    //初始化着色器
+    if( !initShaders(gl,VSHADER_SOURCE,FSHADER_SOURCE) ){
+        console.log( 'Falied to initialize shaders.' );
         return;
     }
 
-    // Initialize shaders
-    if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
-        console.log('Failed to intialize shaders.');
-        return;
-    }
-
-    // Set the vertex information
+    //设置顶点位置
     var n = initVertexBuffers(gl);
-    if (n < 0) {
-        console.log('Failed to set the vertex information');
+    if( n < 0 ){
+        console.log( 'Failed to get the stroge location of a_Position' );
         return;
     }
 
@@ -120,7 +119,7 @@ function initTextures(gl, n) {
     // Register the event handler to be called on loading an image
     image.onload = function(){ loadTexture(gl, n, texture, u_Sampler, image); }
     // Tell the browser to load an image
-    image.src = '../image/sky.JPG';
+    image.src = '../image/yun.png';
 
     return true;
 }
