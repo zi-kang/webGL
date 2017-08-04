@@ -58,10 +58,10 @@ function main() {
 function initVertexBuffers(gl) {
     var verticesTexCoords = new Float32Array([
         // Vertex coordinate, Texture coordinate
-        -0.5,  0.5,   -0.5, 1.0,
-        -0.5, -0.5,   -0.5, -0.2,
-        0.5,  0.5,   1.0, 1.0,
-        0.5, -0.5,   1.0, -0.2
+        -0.5,  0.5,   -0.5, 2.0,
+        -0.5, -0.5,   -0.5, -0.5,
+        0.5,  0.5,   2.0, 2.0,
+        0.5, -0.5,   2.0, -0.5
     ]);
     var n = 4; // The number of vertices
 
@@ -140,6 +140,8 @@ function loadTexture(gl, n, texture, u_Sampler, image) {
 
     // Set the texture parameter
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     // Set the image to texture
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
 
