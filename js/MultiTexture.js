@@ -130,7 +130,7 @@ function initTextures(gl, n){
     image0.onload = function(){ loadTexture(gl, n, texture0, u_Sampler0, image0, 0); };
     image1.onload = function(){ loadTexture(gl, n, texture1, u_Sampler1, image1, 1); };
     // 告诉浏览器开始加载图像
-    image0.src = '../image/sky.jpg';
+    image0.src = '../image/sky.JPG';
     image1.src = '../image/circle.gif';
 
     return true;
