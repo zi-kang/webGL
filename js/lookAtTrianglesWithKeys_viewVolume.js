@@ -76,7 +76,9 @@ function main(){
 
     //创建指定可视空间的矩阵并传给u_ProjMatrix变量
     var projMatrix = new Matrix4();
-    projMatrix.setOrtho(-1.0, 1.0, -1.0, 1.0, 0.0, 6.0);
+    //projMatrix.setOrtho(-1.0, 1.0, -1.0, 1.0, 0.0, 6.0);
+    //projMatrix.setOrtho(-2.0, 2.0, -2.0, 2.0, 0.0, 6.0);//三角形会缩小
+    projMatrix.setOrtho(-0.5, 0.5, -0.5, 0.5, 0.0, 6.0);//三角形会变大
     gl.uniformMatrix4fv(u_ProjMatrix, false, projMatrix.elements);
 
     draw(gl, n, u_ViewMatrix, viewMatrix);//绘制三角形
