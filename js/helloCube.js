@@ -55,19 +55,34 @@ function main() {
         return;
     }
 
-    // 设置视点和可视空间
-    var mvpMatrix = new Matrix4();
-    mvpMatrix.setPerspective(30, 1, 1, 100);
-    mvpMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
-
-    // 将模型视图投影矩阵传给u_MvpMatrix
-    gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
-
-    //清空颜色缓冲区和深度缓冲区
+    //开启隐藏面消除
+    gl.enable( gl.DEPTH_TEST );
+    //清除颜色和深度缓冲区
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    //绘制立方体
-    gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, 0);
+    // 设置视点和可视空间
+    var mvpMatrix = new Matrix4();
+
+
+    //注册键盘事件响应函数
+    document.onkeydown = function(ev){
+        keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, 0);
+    };
+    document.getElementsByClassName('left')[0].onclick = function(ev){
+        keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, 2);
+    };
+    document.getElementsByClassName('right')[0].onclick = function(ev){
+        keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, 1);
+    };
+    document.getElementsByClassName('pre')[0].onclick = function(ev){
+        keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, 3);
+    };
+    document.getElementsByClassName('back')[0].onclick = function(ev){
+        keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, 4);
+    };
+
+    //绘制图形函数
+    draw(gl, n, mvpMatrix, u_MvpMatrix);
 }
 
 function initVertexBuffers(gl) {
@@ -139,4 +154,39 @@ function initVertexBuffers(gl) {
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
 
     return indices.length;
+}
+
+
+var g_eyeX = 3.0, g_eyeY = 3.0, g_eyeZ = 7.0; // 视点
+
+function keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, num) {
+    if(ev.keyCode == 39 || num == 1) { // 按下右键
+        g_eyeX += 0.1;
+    } else if (ev.keyCode == 37 || num == 2 ) { // 按下左键
+        g_eyeX -= 0.1;
+    } else if(ev.keyCode == 38 || num == 3){ //按下上键
+        g_eyeY += 0.1;
+    }else if(ev.keyCode == 40 || num == 4){ //按下下键
+        g_eyeY -= 0.1;
+    } else { //按下其他的键
+        return;
+    }
+    draw(gl, n, mvpMatrix, u_MvpMatrix);
+}
+
+function draw(gl, n, mvpMatrix, u_MvpMatrix) {
+
+    mvpMatrix.setPerspective(30, 1, 1, 100);
+    mvpMatrix.lookAt(g_eyeX, g_eyeY, g_eyeZ, 0, 0, 0, 0, 1, 0);
+
+    // 将模型视图投影矩阵传给u_MvpMatrix
+    gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
+
+    //清空颜色缓冲区和深度缓冲区
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    //绘制立方体
+    gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, 0);
+
+
 }

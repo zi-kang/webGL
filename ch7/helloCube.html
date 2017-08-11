@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=no" />
     <title>Title</title>
+    <style>
+        div{
+            display: inline-block;
+            background-color: #eee;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 15px;
+            color: #000;
+            text-align: center;
+            cursor: pointer;
+        }
+        .left,.pre{
+            margin-left: 50px;
+        }
+    </style>
 </head>
 <body>
 <body onload="main()">
@@ -11,6 +27,11 @@
     Please use a brower that supports "canvas"
 </canvas>
 <p></p>
+<div class="left">向左走</div>
+<div class="right">向右走</div>
+<p></p>
+<div class="pre">向前走</div>
+<div class="back">向后走</div>
 <script type="text/javascript" src="../js/lib/webgl-utils.js"></script>
 <script type="text/javascript" src="../js/lib/webgl-debug.js"></script>
 <script type="text/javascript" src="../js/lib/cuon-utils.js"></script>
