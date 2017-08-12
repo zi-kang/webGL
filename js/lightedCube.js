@@ -56,7 +56,7 @@ function main() {
     }
 
     // Set the clear color and enable the depth test
-    gl.clearColor(0, 0, 0, 1);
+    gl.clearColor(0.5, 0.5, 0.5, 1);
     gl.enable(gl.DEPTH_TEST);
 
     // Get the storage locations of uniform variables and so on
@@ -77,15 +77,28 @@ function main() {
 
     // Calculate the view projection matrix
     var mvpMatrix = new Matrix4();    // Model view projection matrix
-    mvpMatrix.setPerspective(30, canvas.width/canvas.height, 1, 100);
-    mvpMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
-    // Pass the model view projection matrix to the variable u_MvpMatrix
-    gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
+     // Draw the cube
 
-    // Clear color and depth buffer
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, 0);   // Draw the cube
+    //注册键盘事件响应函数
+    document.onkeydown = function(ev){
+        keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, 0, canvas);
+    };
+    document.getElementsByClassName('left')[0].onclick = function(ev){
+        keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, 2, canvas);
+    };
+    document.getElementsByClassName('right')[0].onclick = function(ev){
+        keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, 1, canvas);
+    };
+    document.getElementsByClassName('pre')[0].onclick = function(ev){
+        keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, 3, canvas);
+    };
+    document.getElementsByClassName('back')[0].onclick = function(ev){
+        keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, 4, canvas);
+    };
+
+    //绘制图形函数
+    draw(gl, n, mvpMatrix, u_MvpMatrix, canvas);
 }
 
 
@@ -117,13 +130,22 @@ function initVertexBuffers(gl) {
     ]);
 
 
-    var colors = new Float32Array([    // Colors
+   /* var colors = new Float32Array([    // Colors
         0.4, 0.4, 1.0,  0.4, 0.4, 1.0,  0.4, 0.4, 1.0,  0.4, 0.4, 1.0,  // v0-v1-v2-v3 前（蓝色）
         0.4, 1.0, 0.4,  0.4, 1.0, 0.4,  0.4, 1.0, 0.4,  0.4, 1.0, 0.4,  // v0-v3-v4-v5 右(绿色)
         1.0, 0.4, 0.4,  1.0, 0.4, 0.4,  1.0, 0.4, 0.4,  1.0, 0.4, 0.4,  // v0-v5-v6-v1 上(红色)
         1.0, 1.0, 0.4,  1.0, 1.0, 0.4,  1.0, 1.0, 0.4,  1.0, 1.0, 0.4,  // v1-v6-v7-v2 左(黄色)
         1.0, 1.0, 1.0,  1.0, 1.0, 1.0,  1.0, 1.0, 1.0,  1.0, 1.0, 1.0,  // v7-v4-v3-v2 下(白色)
         0.4, 1.0, 1.0,  0.4, 1.0, 1.0,  0.4, 1.0, 1.0,  0.4, 1.0, 1.0   // v4-v7-v6-v5 后(青色)
+    ]);*/
+
+    var colors = new Float32Array([    // Colors
+        1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v0-v1-v2-v3 front
+        1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v0-v3-v4-v5 right
+        1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v0-v5-v6-v1 up
+        1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v1-v6-v7-v2 left
+        1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v7-v4-v3-v2 down
+        1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0　    // v4-v7-v6-v5 back
     ]);
 
 
@@ -192,7 +214,7 @@ function initArrayBuffer(gl, attribute, data, num, type) {
 
 var g_eyeX = 3.0, g_eyeY = 3.0, g_eyeZ = 7.0; // 视点
 
-/*function keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, num, u_LightColor, u_LightDirection) {
+function keydown(ev, gl, n,  mvpMatrix, u_MvpMatrix, num, canvas) {
     if(ev.keyCode == 39 || num == 1) { // 按下右键
         g_eyeX += 0.1;
     } else if (ev.keyCode == 37 || num == 2 ) { // 按下左键
@@ -204,15 +226,15 @@ var g_eyeX = 3.0, g_eyeY = 3.0, g_eyeZ = 7.0; // 视点
     } else { //按下其他的键
         return;
     }
-    draw(gl, n, mvpMatrix, u_MvpMatrix, u_LightColor, u_LightDirection);
-}*/
+    draw(gl, n, mvpMatrix, u_MvpMatrix, canvas);
+}
 
-/*function draw(gl, n, mvpMatrix, u_MvpMatrix, u_LightColor, u_LightDirection) {
+function draw(gl, n, mvpMatrix, u_MvpMatrix, canvas) {
 
 
 
     //计算模型视图投影矩阵
-    mvpMatrix.setPerspective(30, 1, 1, 100);
+    mvpMatrix.setPerspective(30, canvas.width/canvas.height, 1, 100);
     mvpMatrix.lookAt(g_eyeX, g_eyeY, g_eyeZ, 0, 0, 0, 0, 1, 0);
 
     // 将模型视图投影矩阵传给u_MvpMatrix
@@ -227,4 +249,4 @@ var g_eyeX = 3.0, g_eyeY = 3.0, g_eyeZ = 7.0; // 视点
     gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_BYTE, 0);
 
 
-}*/
+}
