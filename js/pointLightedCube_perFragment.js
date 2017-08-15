@@ -8,35 +8,38 @@ var VSHADER_SOURCE =
     'uniform mat4 u_MvpMatrix;\n' +
     'uniform mat4 u_ModelMatrix;\n' +    //模型矩阵
     'uniform mat4 u_NormalMatrix;\n' +    //用来变换法向量的矩阵
-    'uniform vec3 u_LightColor;\n' +     // 光线颜色
-    'uniform vec3 u_LightPosition;\n' + // 光源位置（世界坐标系下）
-    'uniform vec3 u_AmbientLight;\n' + // 环境光颜色
     'varying vec4 v_Color;\n' +
+    'varying vec3 v_Normal;\n' +
+    'varying vec3 v_Position;\n' +
     'void main() {\n' +
     '  gl_Position = u_MvpMatrix * a_Position ;\n' +
-    // 计算变换后的法向量并归一化
-    ' vec3 normal = normalize(vec3(u_NormalMatrix * a_Normal));\n'+
-    // 计算顶点的世界坐标系
-    ' vec4 vertexPosition = u_ModelMatrix * a_Position;\n'+
-    // 计算光线方向并归一化
-    ' vec3 lightDirection = normalize(u_LightPosition - vec3(vertexPosition));\n'+
-    // 计算光线方向和法向量的点积
-    '  float nDotL = max(dot(lightDirection, normal), 0.0);\n' +
-    // 计算漫反射光的颜色
-    '  vec3 diffuse = u_LightColor * a_Color.rgb * nDotL;\n' +
-    //计算环境光产生的反射光颜色
-    ' vec3 ambient = u_AmbientLight * a_Color.rgb;\n'+
-    //将以上两者相加得到物体最终的颜色
-    '  v_Color = vec4(diffuse + ambient, a_Color.a);\n' +
+    //计算顶点的世界坐标
+    '  v_Position = vec3(u_ModelMatrix * a_Position);\n' +
+    '  v_Normal = normalize(vec3(u_NormalMatrix * a_Normal));\n' +
+    '  v_Color = a_Color;\n' +
     '}\n';
 
 var FSHADER_SOURCE =
     '#ifdef GL_ES\n' +
     'precision mediump float;\n' +
     '#endif\n' +
+    'uniform vec3 u_LightColor;\n' +     // 光线颜色
+    'uniform vec3 u_LightPosition;\n' + // 光源位置（世界坐标系下）
+    'uniform vec3 u_AmbientLight;\n' + // 环境光颜色
+    'varying vec3 v_Normal;\n' +
+    'varying vec3 v_Position;\n' +
     'varying vec4 v_Color;\n' +
     'void main() {\n' +
-    '  gl_FragColor = v_Color;\n' +
+    //对法线进行归一化，因为其内插之后长度不一定是1.0
+    ' vec3 normal = normalize(v_Normal);\n'+
+        //计算光线方向并归一化
+    ' vec3 lightDirection = normalize(u_LightPosition - v_Position);\n'+
+        //计算光线方向和法向量的点积
+    ' float nDotL = max(dot(lightDirection, normal), 0.0);\n'+
+        //计算diffuse、ambient以及最终的颜色
+    ' vec3 diffuse = u_LightColor * v_Color.rgb * nDotL;\n'+
+    ' vec3 ambient = u_AmbientLight * v_Color.rgb;\n'+
+    ' gl_FragColor = vec4(diffuse + ambient, v_Color.a);\n' +
     '}\n';
 
 
@@ -161,14 +164,14 @@ function initVertexBuffers(gl) {
     ]);
 
 
-     var colors = new Float32Array([    // 顶点颜色
+    var colors = new Float32Array([    // 顶点颜色
         1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v0-v1-v2-v3 前
         1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v0-v3-v4-v5 右
         1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v0-v5-v6-v1 上
         1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v1-v6-v7-v2 左
         1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0,     // v7-v4-v3-v2 下
         1, 0, 0,   1, 0, 0,   1, 0, 0,  1, 0, 0　    // v4-v7-v6-v5 后
-     ]);
+    ]);
 
 
     var normals = new Float32Array([    // 法向量
