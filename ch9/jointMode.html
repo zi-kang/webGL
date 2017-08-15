@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=no" />
+    <title>尽情地旋转吧oUo</title>
+    <style>
+        div{
+            display: inline-block;
+            background-color: #eee;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 15px;
+            color: #000;
+            text-align: center;
+            cursor: pointer;
+        }
+        .left,.pre{
+            margin-left: 50px;
+        }
+    </style>
+</head>
+<body>
+<body onload="main()">
+<canvas id="webgl" width="400" height="400">
+    Please use a brower that supports "canvas"
+</canvas>
+<p></p>
+<div class="pre">下臂上转动</div>
+<div class="back">下臂下转动</div>
+<p></p>
+<div class="left">上臂右转动</div>
+<div class="right">上臂左转动</div>
+
+<p>&larr;&rarr;: arm1 rotation(y-axis), &uarr;&darr;: joint1 rotation(z-axis)</p>
+
+<script type="text/javascript" src="../js/lib/webgl-utils.js"></script>
+<script type="text/javascript" src="../js/lib/webgl-debug.js"></script>
+<script type="text/javascript" src="../js/lib/cuon-utils.js"></script>
+<script type="text/javascript" src="../js/lib/cuon-matrix.js"></script>
+<script src="../js/jointMode.js" type="text/javascript"></script>
+</body>
+</body>
+</html>
