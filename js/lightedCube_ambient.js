@@ -81,7 +81,7 @@ function main() {
     gl.uniform3fv(u_LightDirection, lightDirection.elements);
 
     //传入环境光
-    gl.uniform3f(u_AmbientLight, 0.2, 0.2, 0.2);
+    gl.uniform3f(u_AmbientLight, 0.3, 0.3, 0.3);
 
 
 
