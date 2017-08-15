@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=no" />
+    <title>Title</title>
+    <style>
+        div{
+            display: inline-block;
+            background-color: #eee;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 15px;
+            color: #000;
+            text-align: center;
+            cursor: pointer;
+        }
+        .left,.pre,.clockwise{
+            margin-left: 50px;
+        }
+        h1{
+            font-size: 12px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<body onload="main()">
+<canvas id="webgl" width="400" height="400">
+    Please use a brower that supports "canvas"
+</canvas>
+<p></p>
+<div class="left">向左转</div>
+<div class="right">向右转</div>
+<p></p>
+<div class="pre">向上转</div>
+<div class="back">向下转</div>
+<p></p>
+<div class="clockwise">顺时针转</div>
+<div class="counterclockwise">逆时针转</div>
+<h1>所有的旋转都是根据初始的状态进行旋转的，所以进行不同的旋转会感觉出错是正常的</h1>
+<script type="text/javascript" src="../js/lib/webgl-utils.js"></script>
+<script type="text/javascript" src="../js/lib/webgl-debug.js"></script>
+<script type="text/javascript" src="../js/lib/cuon-utils.js"></script>
+<script type="text/javascript" src="../js/lib/cuon-matrix.js"></script>
+<script src="../js/lightedTranslatedRotatedCube.js" type="text/javascript"></script>
+</body>
+</body>
+</html>
