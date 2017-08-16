@@ -279,7 +279,7 @@ function initArrayBufferForLaterUse(gl, data, num, type) {
     return buffer;
 }
 
-function initArrayBuffer(gl, attribute, data, type, num) {
+function initArrayBuffer(gl, attribute, data, num, type) {
     // 创建一个缓冲区对象
     var buffer = gl.createBuffer();
     if (!buffer) {
