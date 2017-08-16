@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0, user-scalable=no" />
+    <title>尽情地旋转吧oUo</title>
+    <style>
+        div{
+            display: inline-block;
+            background-color: #eee;
+            height: 30px;
+            min-width: 60px;
+            padding: 0 5px;
+            line-height: 30px;
+            border-radius: 15px;
+            color: #000;
+            text-align: center;
+            cursor: pointer;
+        }
+        p{
+            display: inline-block;
+            margin: 0 10px;
+            color: #666;
+            font-size: 14px;
+        }
+        .title{
+            padding-left: 60px;
+        }
+    </style>
+</head>
+<body>
+<body onload="main()">
+<canvas id="webgl" width="400" height="400">
+    Please use a brower that supports "canvas"
+</canvas>
+<br>
+<p>手指转动：</p><p class="title">手掌转动:</p>
+<br>
+<div class="pointer">开</div>
+<div class="pointer">合</div>
+<div class="palm">逆时针</div>
+<div class="palm">顺时针</div>
+<br>
+<p>下臂转动:</p><p class="title">上臂转动:</p>
+<br>
+<div class="arm">抬起</div>
+<div class="arm">放下</div>
+<div class="arm">逆时针</div>
+<div class="arm">顺时针</div>
+<br><br>
+<p>&larr;&rarr;: 上臂(arm1)转动,&uarr;&darr;: 下臂(joint1)转动, xz: 手掌(joint2)转动, cv: 手指转动</p>
+
+<script type="text/javascript" src="../js/lib/webgl-utils.js"></script>
+<script type="text/javascript" src="../js/lib/webgl-debug.js"></script>
+<script type="text/javascript" src="../js/lib/cuon-utils.js"></script>
+<script type="text/javascript" src="../js/lib/cuon-matrix.js"></script>
+<script src="../js/multiJointModel.js" type="text/javascript"></script>
+</body>
+</body>
+</html>
