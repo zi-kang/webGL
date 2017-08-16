@@ -101,7 +101,7 @@ function clicked(num, gl, n, viewProjMatrix, u_MvpMatrix, u_NormalMatrix){
             if (g_joint1Angle < 135.0) g_joint1Angle += ANGLE_STEP;
             break;
         case 4:
-            if (g_joint1Angle < 135.0) g_joint1Angle -= ANGLE_STEP;
+            if (g_joint1Angle > -135.0) g_joint1Angle -= ANGLE_STEP;
             break;
         default: return;
     }
