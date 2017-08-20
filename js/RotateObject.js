@@ -227,7 +227,7 @@ function initTextures(gl) {
     // 注册图片加载响应函数
     image.onload = function(){ loadTexture(gl, texture, u_Sampler, image); };
     //高速浏览器加载图片
-    image.src = '../image/sky.jpg';
+    image.src = '../image/sky.JPG';
 
     return true;
 }
