@@ -27,6 +27,25 @@ var FSHADER_SOURCE =
 
 var ANGLE_STEP = 20.0; // 每秒钟旋转的角度
 
+function isMobile(){
+    var sUserAgent= navigator.userAgent.toLowerCase(),
+        bIsIpad= sUserAgent.match(/ipad/i) == "ipad",
+        bIsIphoneOs= sUserAgent.match(/iphone os/i) == "iphone os",
+        bIsMidp= sUserAgent.match(/midp/i) == "midp",
+        bIsUc7= sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4",
+        bIsUc= sUserAgent.match(/ucweb/i) == "ucweb",
+        bIsAndroid= sUserAgent.match(/android/i) == "android",
+        bIsCE= sUserAgent.match(/windows ce/i) == "windows ce",
+        bIsWM= sUserAgent.match(/windows mobile/i) == "windows mobile",
+        bIsWebview = sUserAgent.match(/webview/i) == "webview";
+    return (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM);
+}
+
+var touchStart,touchMove,touchEnd;
+touchStart = isMobile() ? 'touchstart' : 'mousedown';
+touchMove = isMobile() ? 'touchmove' : 'mousemove';
+touchEnd = isMobile() ? 'touchend' : 'mouseup';
+
 function main() {
     var canvas = document.getElementById('webgl');
     if( !canvas ){
@@ -72,14 +91,28 @@ function main() {
 
     var currentAngle = 0.0; //当前旋转角度
     // 注册事件响应函数
-    canvas.onclick = function(ev) {   //鼠标按下时
-        var x = ev.clientX, y = ev.clientY;
-        var rect = ev.target.getBoundingClientRect();
-        if (rect.left <= x && x < rect.right && rect.top <= y && y < rect.bottom) {
-            // 如果点击事件发生在canva区域内检测是否点击在立方体上
-            var x_in_canvas = x - rect.left, y_in_canvas = rect.bottom - y;
-            var picked = check(gl, n, x_in_canvas, y_in_canvas, currentAngle, u_Clicked, viewProjMatrix, u_MvpMatrix);
-            if (picked) alert('你点到我了，在：('+x_in_canvas+', '+y_in_canvas+')处！');
+    if( isMobile() ){
+        canvas.addEventListener("touchstart", function(ev){
+            //鼠标按下时
+            var x = ev.targetTouches[0].pageX, y = ev.targetTouches[0].pageY;
+            var rect = ev.target.getBoundingClientRect();
+            if (rect.left <= x && x < rect.right && rect.top <= y && y < rect.bottom) {
+                // 如果点击事件发生在canva区域内检测是否点击在立方体上
+                var x_in_canvas = x - rect.left, y_in_canvas = rect.bottom - y;
+                var picked = check(gl, n, x_in_canvas, y_in_canvas, currentAngle, u_Clicked, viewProjMatrix, u_MvpMatrix);
+                if (picked) alert('你点到我了，在：('+x_in_canvas+', '+y_in_canvas+')处！');
+            }
+        });
+    }else{
+        canvas.onmousedown = function(ev) {   //鼠标按下时
+            var x = ev.clientX, y = ev.clientY;
+            var rect = ev.target.getBoundingClientRect();
+            if (rect.left <= x && x < rect.right && rect.top <= y && y < rect.bottom) {
+                // 如果点击事件发生在canva区域内检测是否点击在立方体上
+                var x_in_canvas = x - rect.left, y_in_canvas = rect.bottom - y;
+                var picked = check(gl, n, x_in_canvas, y_in_canvas, currentAngle, u_Clicked, viewProjMatrix, u_MvpMatrix);
+                if (picked) alert('你点到我了，在：('+x_in_canvas+', '+y_in_canvas+')处！');
+            }
         }
     }
 
