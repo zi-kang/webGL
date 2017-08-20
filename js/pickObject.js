@@ -72,7 +72,7 @@ function main() {
 
     var currentAngle = 0.0; //当前旋转角度
     // 注册事件响应函数
-    canvas.onmousedown = function(ev) {   //鼠标按下时
+    canvas.onclick = function(ev) {   //鼠标按下时
         var x = ev.clientX, y = ev.clientY;
         var rect = ev.target.getBoundingClientRect();
         if (rect.left <= x && x < rect.right && rect.top <= y && y < rect.bottom) {
