@@ -94,7 +94,7 @@ function main() {
     var currentAngle = 0.0; //当前旋转角度
     // 注册事件响应函数
     if( isMobile() ){
-        canvas.addEventListener("touchstart", function(ev){
+        hud.addEventListener("touchstart", function(ev){
             //鼠标按下时
             var x = ev.targetTouches[0].pageX, y = ev.targetTouches[0].pageY;
             var rect = ev.target.getBoundingClientRect();
@@ -106,7 +106,7 @@ function main() {
             }
         });
     }else{
-        canvas.onmousedown = function(ev) {   //鼠标按下时
+        hud.onmousedown = function(ev) {   //鼠标按下时
             var x = ev.clientX, y = ev.clientY;
             var rect = ev.target.getBoundingClientRect();
             if (rect.left <= x && x < rect.right && rect.top <= y && y < rect.bottom) {
