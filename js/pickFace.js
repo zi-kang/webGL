@@ -4,7 +4,7 @@
 var VSHADER_SOURCE =
     'attribute vec4 a_Position;\n' +
     'attribute vec4 a_Color;\n' +
-    'uniform float a_Face;\n' + //表面编号(不能使用int整形)
+    'attribute float a_Face;\n' + //表面编号(不能使用int整形)
     'uniform mat4 u_MvpMatrix;\n' +
     'uniform int u_PickedFace;\n' + //被选中表面的编号
     'varying vec4 v_Color;\n' +
