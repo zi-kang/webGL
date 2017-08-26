@@ -330,7 +330,7 @@ function draw(gl, canvas, fbo, plane, cube, angle, texture, viewProjMatrix, view
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);        // Change the drawing destination to color buffer
     gl.viewport(0, 0, canvas.width, canvas.height);  // Set the size of viewport back to that of <canvas>
 
-    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.clearColor(0.5, 0.5, 0.5, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); // Clear the color buffer
 
     drawTexturedPlane(gl, gl.program, plane, angle, fbo.texture, viewProjMatrix);  // Draw the plane
